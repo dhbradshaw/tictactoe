@@ -5,6 +5,10 @@ enum SquareState {
 }
 
 class BoardBrain {
+  BoardBrain(this.moves) {
+    initializeStates();
+  }
+
   final List<int> moves;
   List<SquareState> states;
   final List<List<int>> toCheck = [
@@ -20,9 +24,6 @@ class BoardBrain {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  BoardBrain(this.moves) {
-    initializeStates();
-  }
 
   state(int index) {
     return states[index];
@@ -33,6 +34,11 @@ class BoardBrain {
     for (int i = 0; i < moves.length; i++) {
       states[moves[i]] = (i % 2 == 0) ? SquareState.X : SquareState.O;
     }
+  }
+
+  bool isWinner(int index) {
+    List<int> ws = winners() ?? [];
+    return ws.contains(index); 
   }
 
   List<int> winners() {

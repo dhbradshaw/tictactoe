@@ -30,7 +30,10 @@ class TicTacToe extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Board(),
+        child: FittedBox(
+          child: Board(),
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }
@@ -81,10 +84,13 @@ class _BoardState extends State<Board> {
   Square square(int index, BoardBrain brain) {
     return Square(
         squareState: brain.state(index),
+        isWinner: brain.isWinner(index),
         onPress: () {
-          setState(() {
-            moves.add(index);
-          });
+          if (moves.contains(index) == false) {
+            setState(() {
+              moves.add(index);
+            });
+          }
         });
   }
 }
@@ -92,14 +98,15 @@ class _BoardState extends State<Board> {
 class Square extends StatelessWidget {
   final onPress;
   final SquareState squareState;
-  Square({this.squareState, this.onPress});
+  final bool isWinner;
+  Square({this.squareState, this.onPress, this.isWinner});
 
   @override
   Widget build(BuildContext context) {
     var color;
     var backgroundColor;
     var icon;
-    backgroundColor = Colors.grey.shade200;
+    backgroundColor = isWinner ? Colors.grey.shade300 : Colors.grey.shade200;
     if (squareState == SquareState.X) {
       color = Colors.red;
       icon = Icons.close;
@@ -108,22 +115,24 @@ class Square extends StatelessWidget {
       icon = Icons.trip_origin;
     } else {
       color = Colors.white;
-      icon = Icons.tv;
+      // icon = Icons.tv;
     }
     return FlatButton(
       onPressed: onPress,
       padding: EdgeInsets.all(0),
       child: Container(
         margin: EdgeInsets.all(5),
-        height: 200,
-        width: 200,
+        height: 300,
+        width: 300,
         color: backgroundColor,
-        child: Center(
-            child: Icon(
-          icon,
-          color: color,
-          size: 200,
-        )),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Icon(
+            icon,
+            color: color,
+            size: 500,
+          ),
+        ),
       ),
     );
   }
