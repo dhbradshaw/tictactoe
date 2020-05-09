@@ -53,43 +53,39 @@ class _BoardState extends State<Board> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            square(0, 0, brain),
-            square(0, 1, brain),
-            square(0, 2, brain),
+            square(0, brain),
+            square(1, brain),
+            square(2, brain),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            square(1, 0, brain),
-            square(1, 1, brain),
-            square(1, 2, brain),
+            square(3, brain),
+            square(4, brain),
+            square(5, brain),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            square(2, 0, brain),
-            square(2, 1, brain),
-            square(2, 2, brain),
+            square(6, brain),
+            square(7, brain),
+            square(8, brain),
           ],
         ),
       ],
     ));
   }
 
-  Square square(row, column, brain) {
+  Square square(int index, BoardBrain brain) {
     return Square(
-        squareState: brain.state(row, column),
+        squareState: brain.state(index),
         onPress: () {
-          makeMove(row, column);
+          setState(() {
+            moves.add(index);
+          });
         });
-  }
-
-  void makeMove(int row, int column) {
-    setState(() {
-      moves.add(3 * row + column);
-    });
   }
 }
 
