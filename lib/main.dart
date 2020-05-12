@@ -53,6 +53,14 @@ class _BoardState extends State<Board> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        FlatButton(
+          child: Icon(Icons.refresh),
+          onPressed: () {
+            setState(() {
+              moves = [];
+            });
+          },
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
